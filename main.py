@@ -68,8 +68,6 @@ def oauth_callback(
     Returns:
         Optional[cl.User]: The user object if the OAuth process is successful, else None.
     """
-    print(raw_user_data["name"])
-    print(default_user.metadata["name"])
     return default_user
 
 
@@ -360,8 +358,8 @@ async def chat_records() -> tuple:
     user = cl.user_session.get('user')
     if user is None:
         raise ValueError("Invalid user")
-    name = user
-    email_or_phone_number = user
+    name = user.metadata["name"]
+    email_or_phone_number = user.identifier
     datetime_of_chat: datetime = datetime.utcnow()
     chat_duration = 30
     chat_transcript = cl.user_session.get("runnable").get_session_history(session_id)
