@@ -403,7 +403,7 @@ async def chat_records() -> tuple:
         chat_transcript_str = str(chat_transcript)
 
     values: tuple = (
-        session_id, name.identifier, email_or_phone_number.identifier, datetime_of_chat, chat_duration,
+        session_id, name, email_or_phone_number, datetime_of_chat, chat_duration,
         chat_transcript_str, chat_summary, category, severity, social_care_eligibility,
         suggested_course_of_action, next_steps, contact_request, status, final_rating, feedback
     )
