@@ -363,7 +363,11 @@ async def chat_records() -> tuple:
     datetime_of_chat: datetime = datetime.utcnow()
     chat_duration = 30
     chat_transcript = cl.user_session.get("runnable").get_session_history(session_id)
-    if chat_transcript != '':
+    if isinstance(chat_transcript, str):
+        chat_transcript_str = chat_transcript
+    else:
+        chat_transcript_str = str(chat_transcript)
+    if chat_transcript_str != '':
         chat_info = await get_chat_info(session_id)
 
         # if chat_info or chat_transcript is None:
@@ -398,10 +402,7 @@ async def chat_records() -> tuple:
             raise ValueError("Invalid values for chat_summary, category, severity, "
                              "suggested_course_of_action, next_steps, contact_request, or status")
 
-        if isinstance(chat_transcript, str):
-            chat_transcript_str = chat_transcript
-        else:
-            chat_transcript_str = str(chat_transcript)
+
 
         values: tuple = (
             session_id, name, email_or_phone_number, datetime_of_chat, chat_duration,
