@@ -64,7 +64,7 @@ Please adhere to the provided urgent need guidelines, exclusion criteria and soc
         Action: Tell User to contact a healthcare professional such as your GP, NHS 111 or for emergency situations 999. 
     - Social Care Emergency:
         Criteria: The user has any social care emergency and needs immediate assistance
-        Action: Tell User to please call Customer First on 01942 828777. 
+        Action: Tell User to please call 01942 828777. 
     - Homelessness Situation:
         Criteria: The User has found that they are homeless
         Action: Tell User to please present themselves at their local council in order to seek further assistance.
