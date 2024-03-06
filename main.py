@@ -363,7 +363,7 @@ async def chat_records() -> tuple:
     datetime_of_chat: datetime = datetime.utcnow()
     chat_duration = 30
     chat_transcript = cl.user_session.get("runnable").get_session_history(session_id)
-    if chat_transcript:
+    if chat_transcript != '':
         chat_info = await get_chat_info(session_id)
 
         # if chat_info or chat_transcript is None:
