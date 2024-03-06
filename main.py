@@ -310,7 +310,8 @@ async def on_chat_end():
             # Start a transaction and insert chat records
             async with conn.transaction():
                 values = await chat_records()
-                await conn.execute(INSERT_QUERY, *values)
+                if values:
+                    await conn.execute(INSERT_QUERY, *values)
         except (ValueError, asyncpg.PostgresError) as e:
             logger.error(f"Error processing chat: {e}")
         finally:
