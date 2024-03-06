@@ -343,10 +343,11 @@ class Auth0OAuthProvider(OAuthProvider):
             )
             response.raise_for_status()
             auth0_user = response.json()
-            print(auth0_user)
+            # print(auth0_user)
             user = User(
                 identifier=auth0_user.get("email"),
                 metadata={
+                    "name": auth0_user.get("name"),
                     "image": auth0_user.get("picture", ""),
                     "provider": "auth0",
                 },
