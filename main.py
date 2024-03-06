@@ -363,52 +363,55 @@ async def chat_records() -> tuple:
     datetime_of_chat: datetime = datetime.utcnow()
     chat_duration = 30
     chat_transcript = cl.user_session.get("runnable").get_session_history(session_id)
-    chat_info = await get_chat_info(session_id)
+    if chat_transcript:
+        chat_info = await get_chat_info(session_id)
 
-    # if chat_info or chat_transcript is None:
-    #     # Handle the case when `get_chat_info(session_id)` returns None
-    #     raise ValueError("Invalid chat_info and chat transcript")
+        # if chat_info or chat_transcript is None:
+        #     # Handle the case when `get_chat_info(session_id)` returns None
+        #     raise ValueError("Invalid chat_info and chat transcript")
 
-    attribute_defaults: dict = {
-        'chat_summary': None,
-        'category': None,
-        'severity': None,
-        'social_care_eligibility': None,
-        'suggested_course_of_action': None,
-        'next_steps': None,
-        'contact_request': None,
-        'status': None
-    }
-    attribute_values: dict = {attr: getattr(chat_info, attr, attribute_defaults[attr]) for attr in attribute_defaults}
+        attribute_defaults: dict = {
+            'chat_summary': None,
+            'category': None,
+            'severity': None,
+            'social_care_eligibility': None,
+            'suggested_course_of_action': None,
+            'next_steps': None,
+            'contact_request': None,
+            'status': None
+        }
+        attribute_values: dict = {attr: getattr(chat_info, attr, attribute_defaults[attr]) for attr in attribute_defaults}
 
-    chat_summary = attribute_values['chat_summary']
-    category = attribute_values['category']
-    severity = attribute_values['severity']
-    social_care_eligibility = attribute_values['social_care_eligibility']
-    suggested_course_of_action = attribute_values['suggested_course_of_action']
-    next_steps = attribute_values['next_steps']
-    contact_request = attribute_values['contact_request']
-    status = attribute_values['status']
-    feedback = cl.user_session.get('feedback')
-    final_rating = cl.user_session.get('rating')
+        chat_summary = attribute_values['chat_summary']
+        category = attribute_values['category']
+        severity = attribute_values['severity']
+        social_care_eligibility = attribute_values['social_care_eligibility']
+        suggested_course_of_action = attribute_values['suggested_course_of_action']
+        next_steps = attribute_values['next_steps']
+        contact_request = attribute_values['contact_request']
+        status = attribute_values['status']
+        feedback = cl.user_session.get('feedback')
+        final_rating = cl.user_session.get('rating')
 
-    if not all([chat_summary, category, severity, suggested_course_of_action,
-                next_steps, contact_request, status]):
-        raise ValueError("Invalid values for chat_summary, category, severity, "
-                         "suggested_course_of_action, next_steps, contact_request, or status")
+        if not all([chat_summary, category, severity, suggested_course_of_action,
+                    next_steps, contact_request, status]):
+            raise ValueError("Invalid values for chat_summary, category, severity, "
+                             "suggested_course_of_action, next_steps, contact_request, or status")
 
-    if isinstance(chat_transcript, str):
-        chat_transcript_str = chat_transcript
+        if isinstance(chat_transcript, str):
+            chat_transcript_str = chat_transcript
+        else:
+            chat_transcript_str = str(chat_transcript)
+
+        values: tuple = (
+            session_id, name, email_or_phone_number, datetime_of_chat, chat_duration,
+            chat_transcript_str, chat_summary, category, severity, social_care_eligibility,
+            suggested_course_of_action, next_steps, contact_request, status, final_rating, feedback
+        )
+
+        return values
     else:
-        chat_transcript_str = str(chat_transcript)
-
-    values: tuple = (
-        session_id, name, email_or_phone_number, datetime_of_chat, chat_duration,
-        chat_transcript_str, chat_summary, category, severity, social_care_eligibility,
-        suggested_course_of_action, next_steps, contact_request, status, final_rating, feedback
-    )
-
-    return values
+        logger.error("Invalid values for chat_transcript")
 
 
 async def get_chat_info(session_id):
