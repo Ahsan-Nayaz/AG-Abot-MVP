@@ -69,6 +69,7 @@ def oauth_callback(
         Optional[cl.User]: The user object if the OAuth process is successful, else None.
     """
     print(raw_user_data["name"])
+    print(default_user.metadata["name"])
     return default_user
 
 
