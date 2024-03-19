@@ -1,10 +1,9 @@
 import logging
 import os
+from typing import Dict, Optional
 
-from datetime import timezone
 from langchain_openai import AzureChatOpenAI
 from langchain.chains.openai_functions import create_openai_fn_runnable
-from langchain_core.pydantic_v1 import BaseModel, Field, UUID4
 from langchain.schema import StrOutputParser
 from langchain.schema.runnable import Runnable
 from langchain.schema.runnable.config import RunnableConfig
@@ -16,7 +15,6 @@ from chainlit import Message
 import chainlit as cl
 from utils import CHAT_INFO_PROMPT, PROMPT, ChatInfo
 from datetime import datetime
-from typing import Dict, Optional, Tuple, Any
 import asyncpg
 
 from dotenv import load_dotenv
