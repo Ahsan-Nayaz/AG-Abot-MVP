@@ -1,6 +1,6 @@
 
-from langchain_core.pydantic_v1 import BaseModel, Field, UUID4
-from typing import Dict, Optional, Tuple, Any
+from langchain_core.pydantic_v1 import BaseModel, Field
+from typing import Optional
 
 CHAT_INFO_PROMPT = '''
 You are a Social-Care Chat Transcript Analyser. You are to analyse a given transcript and provide the details in the given format.
@@ -170,8 +170,8 @@ class ChatInfo(BaseModel):
 
     chat_summary: str = Field(..., description="Detailed Summary of the chat")
     category: str = Field(...,
-                          description="Category of the chat based on the guidelines provided earlier (EIP/Social Care/"
-                                      "Urgent Needs/General Queries/Not enough Information)")
+                          description="Category of the chat based on the guidelines provided earlier (eip/social_care/"
+                                      "urgent_needs/general_queries/not_enough_information)")
     severity: str = Field(..., description="Severity of the issue highlighted by the user(High/Medium/Low)")
     social_care_eligibility: Optional[str] = Field(None,
                                                    description="Eligibility for social care (if applicable, score based"
