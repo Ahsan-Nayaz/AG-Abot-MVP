@@ -2,31 +2,48 @@
 # Whether to enable telemetry (default: true). No personal data is collected.
 enable_telemetry = false
 
+
 # List of environment variables to be provided by each user to use the app.
 user_env = []
 
 # Duration (in seconds) during which the session is saved when the connection is lost
-session_timeout = 9999999
+session_timeout = 9999
 
 # Enable third parties caching (e.g LangChain cache)
-cache = true
-show_readme_as_default = false
+cache = false
+
+# Authorized origins
+allow_origins = ["*"]
+
 # Follow symlink for asset mount (see https://github.com/Chainlit/chainlit/issues/317)
 # follow_symlink = false
 
 [features]
-prompt_playground = false
-multi_modal = false
+# Show the prompt playground
+prompt_playground = true
+
+# Process and display HTML in messages. This can be a security risk (see https://stackoverflow.com/questions/19603097/why-is-it-dangerous-to-render-user-generated-html-or-javascript)
 unsafe_allow_html = false
+
+# Process and display mathematical expressions. This can clash with "$" characters in messages.
 latex = false
 
+# Authorize users to upload files with messages
+multi_modal = false
+
+# Allows user to use speech to text
 [features.speech_to_text]
     enabled = true
+    # See all languages here https://github.com/JamesBrill/react-speech-recognition/blob/HEAD/docs/API.md#language-string
+     language = "en-US"
 
 [UI]
 # Name of the app and chatbot.
 name = "Cura"
-custom_css = '/public/stylesheet.css'
+
+
+# Show the readme while the thread is empty.
+show_readme_as_default = true
 
 # Description of the app and chatbot. This is used for HTML tags.
 # description = ""
@@ -45,12 +62,18 @@ hide_cot = true
 
 # Specify a CSS file that can be used to customize the user interface.
 # The CSS file can be served from the public directory or via an external link.
-# custom_css = "/public/test.css"
+custom_css = '/public/stylesheet.css'
 
-# If the app is served behind a reverse proxy (like cloud run) we need to know the base url for oauth
-# base_url = "https://mydomain.com"
+# Specify a Javascript file that can be used to customize the user interface.
+# The Javascript file can be served from the public directory.
+# custom_js = "/public/test.js"
+
+# Specify a custom font url.
+# custom_font = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
 
 # Override default MUI light theme. (Check theme.ts)
+[UI.theme]
+    #font_family = "Inter, sans-serif"
 [UI.theme.light]
     #background = "#FAFAFA"
     #paper = "#FFFFFF"
@@ -72,4 +95,4 @@ hide_cot = true
 
 
 [meta]
-generated_by = "1.0.2"
+generated_by = "1.0.401"
